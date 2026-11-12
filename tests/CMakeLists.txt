@@ -1,0 +1,10 @@
+add_test(NAME config_help COMMAND rocos_co_master --help)
+add_test(NAME config_six_axes COMMAND rocos_co_master --check-config --config "${PROJECT_SOURCE_DIR}/config/erob_6axis/co.yaml")
+set_tests_properties(config_help config_six_axes PROPERTIES LABELS unit)
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+add_executable(config_image_test unit/image_test.cpp)
+target_link_libraries(config_image_test PRIVATE rocos_co_core)
+add_test(NAME config_image_and_od COMMAND config_image_test "${PROJECT_SOURCE_DIR}/config/erob_6axis/co.yaml")
+add_test(NAME config_cli_boundaries COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/unit/config_cli.py"
+    $<TARGET_FILE:rocos_co_master> "${PROJECT_SOURCE_DIR}/config/erob_6axis/co.yaml")
+set_tests_properties(config_image_and_od config_cli_boundaries PROPERTIES LABELS unit)

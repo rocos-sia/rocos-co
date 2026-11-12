@@ -1,0 +1,8 @@
+add_library(rocos_co_core STATIC config/master_config.cpp)
+target_compile_features(rocos_co_core PUBLIC cxx_std_17)
+target_include_directories(rocos_co_core PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}/generated")
+target_compile_options(rocos_co_core PRIVATE -Wall -Wextra -Wpedantic)
+target_link_libraries(rocos_co_core PUBLIC canopennode rocos::shm yaml-cpp Threads::Threads)
+add_executable(rocos_co_master main.cpp)
+target_link_libraries(rocos_co_master PRIVATE rocos_co_core)
+install(TARGETS rocos_co_master RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})

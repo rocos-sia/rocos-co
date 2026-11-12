@@ -1,0 +1,6 @@
+[submodule "3rdparty/CANopenNode"]
+	path = 3rdparty/CANopenNode
+	url = https://github.com/CANopenNode/CANopenNode.git
+[submodule "3rdparty/rocos-shm"]
+	path = 3rdparty/rocos-shm
+	url = https://github.com/rocos-sia/rocos-shm.git

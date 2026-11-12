@@ -18,7 +18,7 @@ if (( EUID != 0 )); then
 fi
 
 packages=(
-    build-essential cmake ninja-build git
+    build-essential cmake ninja-build git python3 doxygen
     libyaml-cpp-dev linux-libc-dev
     iproute2 can-utils
 )
