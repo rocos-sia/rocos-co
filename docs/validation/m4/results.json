@@ -1,0 +1,414 @@
+[
+  {
+    "directory": "normal-665319",
+    "scenario": "normal",
+    "master_id": 1365318,
+    "instance": 5180970031711217513,
+    "initial": [
+      [
+        0,
+        -1000,
+        -1000,
+        8,
+        8
+      ],
+      [
+        1,
+        -2000,
+        -2000,
+        8,
+        8
+      ],
+      [
+        2,
+        -3000,
+        -3000,
+        8,
+        8
+      ],
+      [
+        3,
+        -4000,
+        -4000,
+        8,
+        8
+      ],
+      [
+        4,
+        -5000,
+        -5000,
+        8,
+        8
+      ],
+      [
+        5,
+        -6000,
+        -6000,
+        8,
+        8
+      ]
+    ],
+    "final_image": [
+      [
+        0,
+        -900,
+        -900,
+        8,
+        8
+      ],
+      [
+        1,
+        -1800,
+        -1800,
+        8,
+        8
+      ],
+      [
+        2,
+        -2700,
+        -2700,
+        8,
+        8
+      ],
+      [
+        3,
+        -3600,
+        -3600,
+        8,
+        8
+      ],
+      [
+        4,
+        -4500,
+        -4500,
+        8,
+        8
+      ],
+      [
+        5,
+        -5400,
+        -5400,
+        8,
+        8
+      ]
+    ],
+    "app_positions": [
+      -0.009,
+      -0.018,
+      -0.027,
+      -0.036,
+      -0.045,
+      -0.054
+    ],
+    "wire_cmd": {
+      "0": -900,
+      "1": -1800,
+      "2": -2700,
+      "3": -3600,
+      "4": -4500,
+      "5": -5400
+    },
+    "wire_feedback": {
+      "0": -900,
+      "1": -1800,
+      "2": -2700,
+      "3": -3600,
+      "4": -4500,
+      "5": -5400
+    }
+  },
+  {
+    "directory": "normal-665373",
+    "scenario": "normal",
+    "master_id": 1365318,
+    "instance": 4576014687524069868,
+    "initial": [
+      [
+        0,
+        -1000,
+        -1000,
+        8,
+        8
+      ],
+      [
+        1,
+        -2000,
+        -2000,
+        8,
+        8
+      ],
+      [
+        2,
+        -3000,
+        -3000,
+        8,
+        8
+      ],
+      [
+        3,
+        -4000,
+        -4000,
+        8,
+        8
+      ],
+      [
+        4,
+        -5000,
+        -5000,
+        8,
+        8
+      ],
+      [
+        5,
+        -6000,
+        -6000,
+        8,
+        8
+      ]
+    ],
+    "final_image": [
+      [
+        0,
+        -900,
+        -900,
+        8,
+        8
+      ],
+      [
+        1,
+        -1800,
+        -1800,
+        8,
+        8
+      ],
+      [
+        2,
+        -2700,
+        -2700,
+        8,
+        8
+      ],
+      [
+        3,
+        -3600,
+        -3600,
+        8,
+        8
+      ],
+      [
+        4,
+        -4500,
+        -4500,
+        8,
+        8
+      ],
+      [
+        5,
+        -5400,
+        -5400,
+        8,
+        8
+      ]
+    ],
+    "app_positions": [
+      -0.009,
+      -0.018,
+      -0.027,
+      -0.036,
+      -0.045,
+      -0.054
+    ],
+    "wire_cmd": {
+      "0": -900,
+      "1": -1800,
+      "2": -2700,
+      "3": -3600,
+      "4": -4500,
+      "5": -5400
+    },
+    "wire_feedback": {
+      "0": -900,
+      "1": -1800,
+      "2": -2700,
+      "3": -3600,
+      "4": -4500,
+      "5": -5400
+    }
+  },
+  {
+    "directory": "wrong-id-665427",
+    "scenario": "wrong-id",
+    "master_id": 1365318,
+    "instance": 5976106862178763277,
+    "initial": [
+      [
+        0,
+        -1000,
+        -1000,
+        8,
+        8
+      ],
+      [
+        1,
+        -2000,
+        -2000,
+        8,
+        8
+      ],
+      [
+        2,
+        -3000,
+        -3000,
+        8,
+        8
+      ],
+      [
+        3,
+        -4000,
+        -4000,
+        8,
+        8
+      ],
+      [
+        4,
+        -5000,
+        -5000,
+        8,
+        8
+      ],
+      [
+        5,
+        -6000,
+        -6000,
+        8,
+        8
+      ]
+    ],
+    "app_exit": 1,
+    "app_diagnostic": [
+      "[2026-11-12 19:12:27.450] [Startup] [error] Startup failed (config=/home/think/Documents/GitHub/rocos-co/build/vcan/app-integration/wrong-id-665427/app.yaml): Cannot map fixed v2 header"
+    ]
+  },
+  {
+    "directory": "wrong-name-665453",
+    "scenario": "wrong-name",
+    "master_id": 1365318,
+    "instance": 13242433865584635384,
+    "initial": [
+      [
+        0,
+        -1000,
+        -1000,
+        8,
+        8
+      ],
+      [
+        1,
+        -2000,
+        -2000,
+        8,
+        8
+      ],
+      [
+        2,
+        -3000,
+        -3000,
+        8,
+        8
+      ],
+      [
+        3,
+        -4000,
+        -4000,
+        8,
+        8
+      ],
+      [
+        4,
+        -5000,
+        -5000,
+        8,
+        8
+      ],
+      [
+        5,
+        -6000,
+        -6000,
+        8,
+        8
+      ]
+    ],
+    "app_diagnostic": [
+      "[2026-11-12 19:12:28.824] [Hardware] [warn] Drive 0: position_actual_value PDO entry is missing (var='wrong_name')"
+    ]
+  },
+  {
+    "directory": "wrong-width-665478",
+    "scenario": "wrong-width",
+    "master_id": 1365318,
+    "descriptor": "slot=0 input=Position actual value expected=4 B actual=2 B",
+    "app_diagnostic": [
+      "[2026-11-12 19:12:30.187] [Startup] [error] Startup failed (config=/home/think/Documents/GitHub/rocos-co/build/vcan/app-integration/wrong-width-665478/app.yaml): PDO size, mapping or write permission"
+    ]
+  },
+  {
+    "directory": "fault-665503",
+    "scenario": "fault",
+    "master_id": 1365318,
+    "instance": 1956463890853853230,
+    "initial": [
+      [
+        0,
+        -1000,
+        -1000,
+        8,
+        8
+      ],
+      [
+        1,
+        -2000,
+        -2000,
+        8,
+        8
+      ],
+      [
+        2,
+        -3000,
+        -3000,
+        8,
+        8
+      ],
+      [
+        3,
+        -4000,
+        -4000,
+        8,
+        8
+      ],
+      [
+        4,
+        -5000,
+        -5000,
+        8,
+        8
+      ],
+      [
+        5,
+        -6000,
+        -6000,
+        8,
+        8
+      ]
+    ],
+    "master_exit": 1,
+    "stop_observations": [
+      "stop slot 0 | status 0x7 | raw velocity 0",
+      "stop slot 1 | status 0x7 | raw velocity 0",
+      "stop slot 2 | status 0x7 | raw velocity 0",
+      "stop slot 3 | status 0x7 | raw velocity 0",
+      "stop slot 4 | status 0x7 | raw velocity unconfirmed",
+      "stop slot 5 | status 0x7 | raw velocity 0"
+    ],
+    "app_exit_on_teardown": 0
+  }
+]

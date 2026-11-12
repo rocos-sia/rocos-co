@@ -1,0 +1,8 @@
+binding_policy: explicit
+joint_bindings:
+  - {joint_name: joint_1, drive_id: 0}
+  - {joint_name: joint_2, drive_id: 1}
+  - {joint_name: joint_3, drive_id: 2}
+  - {joint_name: joint_4, drive_id: 3}
+  - {joint_name: joint_5, drive_id: 4}
+  - {joint_name: joint_6, drive_id: 5}

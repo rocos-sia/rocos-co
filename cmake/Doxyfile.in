@@ -1,0 +1,17 @@
+PROJECT_NAME           = "ROCOS-CO"
+PROJECT_NUMBER         = "@ROCOS_CO_VERSION@"
+OUTPUT_DIRECTORY       = "@PROJECT_BINARY_DIR@/code-docs"
+INPUT                  = "@PROJECT_SOURCE_DIR@/docs/code-overview.md" "@PROJECT_SOURCE_DIR@/src"
+USE_MDFILE_AS_MAINPAGE = "@PROJECT_SOURCE_DIR@/docs/code-overview.md"
+RECURSIVE              = YES
+FILE_PATTERNS          = *.md *.c *.cpp *.h *.hpp
+EXCLUDE                = "@PROJECT_SOURCE_DIR@/src/canopen/port/CO_driver_target.h"
+FULL_PATH_NAMES        = YES
+STRIP_FROM_PATH        = "@PROJECT_SOURCE_DIR@/"
+EXTRACT_ALL            = YES
+SOURCE_BROWSER         = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+HAVE_DOT               = NO
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = NO

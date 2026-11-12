@@ -70,7 +70,9 @@ rocos-co/
 
 ### 依赖纳管与升级
 
-Ubuntu 22.04 上，在仓库根目录运行下列命令。脚本刷新 apt 索引，安装 C/C++ 工具链、CMake、Ninja、Git、yaml-cpp 开发包、Linux CAN 头文件及 SocketCAN 调试工具；普通用户由脚本调用 sudo，root 可直接运行。源码子模块按下文单独初始化。[查看安装脚本](../scripts/install-deps-ubuntu-22.04.sh)
+Ubuntu 22.04 软件源已提供且满足项目版本要求的依赖统一通过 apt 安装。新增此类依赖时，把包名加入安装脚本，由 CMake 查找系统安装的库。首版 `3rdparty/` 仅保留需要固定提交并同步上游的 CANopenNode 和 rocos-shm。
+
+在仓库根目录运行下列命令即可安装系统依赖。脚本刷新 apt 索引，安装 C/C++ 工具链、CMake、Ninja、Git、yaml-cpp 开发包、Linux CAN 头文件、SocketCAN 调试工具，以及测试用的 Python 3 和生成代码文档用的 Doxygen。普通用户执行时脚本调用 sudo，root 可直接运行。[查看安装脚本](../scripts/install-deps-ubuntu-22.04.sh)
 
 ```sh
 ./scripts/install-deps-ubuntu-22.04.sh

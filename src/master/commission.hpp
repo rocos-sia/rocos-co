@@ -20,6 +20,7 @@ struct NodeObservation {
 class Commissioner {
   public:
     Commissioner(const MasterConfig &, Stack &, std::vector<NodeObservation> &, std::function<void()> pump);
+    /// Complete the per-node verification sequence or throw with the failing startup step.
     void run();
 
   private:

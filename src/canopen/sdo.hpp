@@ -13,8 +13,11 @@ class SdoTransfer {
     ~SdoTransfer();
     SdoTransfer(const SdoTransfer &) = delete;
     SdoTransfer &operator=(const SdoTransfer &) = delete;
+    /// Start a bounded download or, for null write_data, an upload with length bytes of capacity.
+    /// Both times are absolute CLOCK_MONOTONIC nanoseconds. Concurrent requests are rejected.
     void start(uint8_t node, uint16_t index, uint8_t sub, const uint8_t *write_data, size_t length,
                uint64_t deadline_ns, uint64_t now_ns);
+    /// Advance once. Read bytes(), size() or abortCode() after a terminal result.
     Result step(uint64_t now_ns) noexcept;
     void cancel() noexcept { finish(Result::failed); }
     const std::array<uint8_t, 64> &bytes() const noexcept { return bytes_; }

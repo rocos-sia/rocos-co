@@ -1,0 +1,16 @@
+# Legacy SHM-ID entry. Tests supply local scripts/web_root directories.
+http_host: 127.0.0.1
+http_port: 18080
+diagnostics: {host: 127.0.0.1, port: 18081}
+logging: {directory: logs, file_level: info, console_level: info}
+scripts: scripts
+web_root: web
+robot:
+  id: erob_vcan
+  ecat_id: 2
+  urdf: robot.urdf
+  base_link: base_link
+  tip_link: link_6
+  hardware_config: hardware.yaml
+  joint_binding: joint_binding.yaml
+  tool_library: tools

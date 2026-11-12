@@ -1,0 +1,80 @@
+master/vcan
+Start testing: Nov 12 19:12 CST
+1/25 Testing: config_help
+Test Passed.
+2/25 Testing: config_six_axes
+Test Passed.
+3/25 Testing: config_image_and_od
+Test Passed.
+4/25 Testing: config_cli_boundaries
+Test Passed.
+5/25 Testing: stack_pdo_transport
+Test Passed.
+6/25 Testing: vcan_socket_vectors
+Test Passed.
+7/25 Testing: vcan_cold
+Test Passed.
+8/25 Testing: vcan_boot
+Test Passed.
+9/25 Testing: vcan_warm
+Test Passed.
+10/25 Testing: vcan_verify
+Test Passed.
+11/25 Testing: vcan_preop
+Test Passed.
+12/25 Testing: vcan_bad-id
+Test Passed.
+13/25 Testing: vcan_partial-abort
+Test Passed.
+14/25 Testing: vcan_verify-bad
+Test Passed.
+15/25 Testing: vcan_missing
+Test Passed.
+16/25 Testing: vcan_dlc
+Test Passed.
+17/25 Testing: vcan_emcy
+Test Passed.
+18/25 Testing: vcan_reboot
+Test Passed.
+19/25 Testing: vcan_busoff
+Test Passed.
+20/25 Testing: deterministic_cycle_windows
+Test Passed.
+21/25 Testing: shm_owner_lifecycle
+Test Passed.
+22/25 Testing: shm_vcan_preop
+Test Passed.
+23/25 Testing: shm_vcan_op
+Test Passed.
+24/25 Testing: shm_vcan_fault
+Test Passed.
+25/25 Testing: real_app_six_axes
+Test Passed.
+End testing: Nov 12 19:12 CST
+master/release
+Start testing: Nov 12 19:12 CST
+1/7 Testing: config_help
+Test Passed.
+2/7 Testing: config_six_axes
+Test Passed.
+3/7 Testing: config_image_and_od
+Test Passed.
+4/7 Testing: config_cli_boundaries
+Test Passed.
+5/7 Testing: stack_pdo_transport
+Test Passed.
+6/7 Testing: deterministic_cycle_windows
+Test Passed.
+7/7 Testing: shm_owner_lifecycle
+Test Passed.
+End testing: Nov 12 19:12 CST
+rocos-app
+Start testing: Nov 12 19:12 CST
+7/93 Testing: shared_memory_config_test
+Test Passed.
+End testing: Nov 12 19:12 CST
+rocos-shm
+Start testing: Nov 12 19:12 CST
+1/1 Testing: rocos_shm_v2
+Test Passed.
+End testing: Nov 12 19:12 CST

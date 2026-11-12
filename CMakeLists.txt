@@ -19,6 +19,13 @@ endif()
 include(CTest)
 include(cmake/Dependencies.cmake)
 configure_file(cmake/version.hpp.in generated/version.hpp @ONLY)
+find_program(ROCOS_CO_DOXYGEN_EXECUTABLE NAMES doxygen)
+if(ROCOS_CO_DOXYGEN_EXECUTABLE)
+    configure_file(cmake/Doxyfile.in Doxyfile @ONLY)
+    add_custom_target(code-docs
+        COMMAND "${ROCOS_CO_DOXYGEN_EXECUTABLE}" "${PROJECT_BINARY_DIR}/Doxyfile"
+        COMMENT "Generating ROCOS-CO code documentation" VERBATIM)
+endif()
 add_subdirectory(src)
 if(BUILD_TESTING)
     add_subdirectory(tests)

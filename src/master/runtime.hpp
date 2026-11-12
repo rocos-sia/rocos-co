@@ -21,11 +21,16 @@ struct CycleStats {
 class ProcessExchange {
   public:
     virtual bool healthy() const noexcept { return true; }
+    /// Advance mailbox work. RESET_STATS requires a boundary and SDO requires a permitted session.
     virtual void manage(SdoTransfer &, uint64_t, bool, bool) noexcept {}
     virtual ~ProcessExchange() = default;
+    /// Publish verified identity and initial Input before the first OP notification. Input is null in PREOP.
     virtual void ready(const std::vector<NodeObservation> &, const uint8_t *input) = 0;
+    /// Publish one complete Input and notify the App on the event-loop thread.
     virtual void publish(const uint8_t *input, const CycleStats &stats) noexcept = 0;
+    /// Snapshot the client-owned Output into the private batch used for the next SYNC.
     virtual void sample(uint8_t *output, size_t size) noexcept = 0;
+    /// Update backend liveness and node observations even between process-image notifications.
     virtual void tick(uint64_t now, const std::vector<NodeObservation> &nodes) noexcept = 0;
 };
 

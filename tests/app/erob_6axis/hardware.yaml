@@ -1,0 +1,80 @@
+# Integration fixture: counts/rad and limits below are synthetic.
+hardware:
+  - id: 0
+    type: driver
+    joint_name: joint_1
+    limit: {lower: -3.0, upper: 3.0, vel: 1.0, acc: 2.0, jerk: 10.0, effort: 1.0}
+    transform: {ratio: 1.0, offset_pos_cnt: 0, pos_per_unit: 100000.0, vel_per_unit: 100000.0, user_unit_name: rad}
+    inputs:
+      status_word: Status word
+      position_actual_value: Position actual value
+      velocity_actual_value: Velocity actual value
+    outputs:
+      control_word: Control word
+      mode_of_operation: Mode of operation
+      target_position: Target Position
+  - id: 1
+    type: driver
+    joint_name: joint_2
+    limit: {lower: -3.0, upper: 3.0, vel: 1.0, acc: 2.0, jerk: 10.0, effort: 1.0}
+    transform: {ratio: 1.0, offset_pos_cnt: 0, pos_per_unit: 100000.0, vel_per_unit: 100000.0, user_unit_name: rad}
+    inputs:
+      status_word: Status word
+      position_actual_value: Position actual value
+      velocity_actual_value: Velocity actual value
+    outputs:
+      control_word: Control word
+      mode_of_operation: Mode of operation
+      target_position: Target Position
+  - id: 2
+    type: driver
+    joint_name: joint_3
+    limit: {lower: -3.0, upper: 3.0, vel: 1.0, acc: 2.0, jerk: 10.0, effort: 1.0}
+    transform: {ratio: 1.0, offset_pos_cnt: 0, pos_per_unit: 100000.0, vel_per_unit: 100000.0, user_unit_name: rad}
+    inputs:
+      status_word: Status word
+      position_actual_value: Position actual value
+      velocity_actual_value: Velocity actual value
+    outputs:
+      control_word: Control word
+      mode_of_operation: Mode of operation
+      target_position: Target Position
+  - id: 3
+    type: driver
+    joint_name: joint_4
+    limit: {lower: -3.0, upper: 3.0, vel: 1.0, acc: 2.0, jerk: 10.0, effort: 1.0}
+    transform: {ratio: 1.0, offset_pos_cnt: 0, pos_per_unit: 100000.0, vel_per_unit: 100000.0, user_unit_name: rad}
+    inputs:
+      status_word: Status word
+      position_actual_value: Position actual value
+      velocity_actual_value: Velocity actual value
+    outputs:
+      control_word: Control word
+      mode_of_operation: Mode of operation
+      target_position: Target Position
+  - id: 4
+    type: driver
+    joint_name: joint_5
+    limit: {lower: -3.0, upper: 3.0, vel: 1.0, acc: 2.0, jerk: 10.0, effort: 1.0}
+    transform: {ratio: 1.0, offset_pos_cnt: 0, pos_per_unit: 100000.0, vel_per_unit: 100000.0, user_unit_name: rad}
+    inputs:
+      status_word: Status word
+      position_actual_value: Position actual value
+      velocity_actual_value: Velocity actual value
+    outputs:
+      control_word: Control word
+      mode_of_operation: Mode of operation
+      target_position: Target Position
+  - id: 5
+    type: driver
+    joint_name: joint_6
+    limit: {lower: -3.0, upper: 3.0, vel: 1.0, acc: 2.0, jerk: 10.0, effort: 1.0}
+    transform: {ratio: 1.0, offset_pos_cnt: 0, pos_per_unit: 100000.0, vel_per_unit: 100000.0, user_unit_name: rad}
+    inputs:
+      status_word: Status word
+      position_actual_value: Position actual value
+      velocity_actual_value: Velocity actual value
+    outputs:
+      control_word: Control word
+      mode_of_operation: Mode of operation
+      target_position: Target Position

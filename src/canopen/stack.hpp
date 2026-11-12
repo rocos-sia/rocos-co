@@ -33,13 +33,17 @@ class Stack {
     bool dispatch(const Frame &frame) noexcept;
     /** Progress asynchronous stack services once. elapsed_us uses monotonic time. */
     bool service(uint32_t elapsed_us) noexcept;
+    /// Submit an NMT command to the selected remote node (zero addresses all nodes).
     CO_ReturnError_t nmt(uint8_t node, CO_NMT_command_t cmd) noexcept;
+    /// Enter Operational on the local CANopenNode instance.
     void operational() noexcept;
+    /// Request one SYNC and report whether the transport accepted it.
     bool sync() noexcept;
     /** Process event-driven local RPDOs in the feedback window of the current SYNC. */
     void readFeedback(uint8_t *image) noexcept;
     /** Copy an entire private image before requesting the local TPDO batch. */
     bool sendTargets(const uint8_t *image) noexcept;
+    /// Remove software-pending transmissions before the next phase.
     void discardPending() noexcept;
     CO_SDOclient_t *client() noexcept { return co_->SDOclient; }
     Io lastTx() const noexcept { return last_tx_; }

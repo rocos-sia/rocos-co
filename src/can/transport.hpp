@@ -30,9 +30,12 @@ struct LinkInfo {
 class Transport {
   public:
     virtual ~Transport() = default;
+    /// Bind the existing interface and validate its link type and expected bit rate.
     virtual LinkInfo open(const std::string &interface, uint32_t expected_bitrate) = 0;
     virtual void setFilters(const std::vector<CanFilter> &filters) = 0;
+    /// Consume one datagram. Only Io::ok supplies a processable frame.
     virtual Io receive(Frame &frame) noexcept = 0;
+    /// Submit one frame. Success indicates host acceptance, without a wire timestamp.
     virtual Io send(const Frame &frame) noexcept = 0;
     virtual void close() noexcept = 0;
 };

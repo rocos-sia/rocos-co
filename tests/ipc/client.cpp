@@ -113,15 +113,28 @@ int main(int argc, char **argv) {
             CHECK(!c.createSharedMemory());
             return 0;
         }
-        bool monitor = mode == "monitor" || mode == "fault";
+        bool monitor = mode == "monitor" || mode == "fault" || mode == "snapshot" || mode == "audit-width";
         uint64_t until = monotonicNs() + 3000000000;
         while (!c.connect(monitor)) {
             if (monotonicNs() >= until)
                 throw std::runtime_error(c.lastError());
             usleep(1000);
         }
+        if(mode=="audit-width") {
+            auto v=c.findSlaveInputVarByName(0,"Position actual value");
+            std::cout<<"slot=0 input=Position actual value expected=4 B actual="<<v.size<<" B\n";
+            CHECK(v.size==2 && v.index==0x6064);return 0;
+        }
         layout(c);
         std::cout << "INSTANCE " << c.header->instance_id << '\n';
+        if (mode == "snapshot") {
+            for(int i=0;i<6;++i)
+                std::cout<<i<<' '<<c.getSlaveInputVarValueByName<int32_t>(i,"Position actual value")
+                         <<' '<<c.getSlaveOutputVarValueByName<int32_t>(i,"Target Position")
+                         <<' '<<int(c.getSlaveInputVarValueByName<int8_t>(i,"Mode display"))
+                         <<' '<<int(c.getSlaveOutputVarValueByName<int8_t>(i,"Mode of operation"))<<'\n';
+            return 0;
+        }
         if (mode == "fault") {
             long stamp = 0;
             const auto end = monotonicNs() + 2000000000;

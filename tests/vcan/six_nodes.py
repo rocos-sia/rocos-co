@@ -119,7 +119,10 @@ class Drive:
             self.mode=mode
             if cw==2:
                 self.status=0x07
-            elif cw==0xf:
+            elif cw&0x8f==6: self.status=0x21
+            elif cw&0x8f==7: self.status=0x23
+            elif cw&0x8f==0: self.status=0x40
+            elif cw&0xf==0xf:
                 self.status=0x27
                 self.position=pos
         for comm, pack in [(0x1800,struct.pack('<Hi',self.status,self.position)),
@@ -128,6 +131,7 @@ class Drive:
             if cob&0x80000000 or self.value(comm,2)!=1: continue
             inject=self.node==5 and self.sync_count>=24 and comm==0x1801
             if inject and scenario=='missing': continue
+            if scenario=='wrong-width' and self.node==1 and comm==0x1800: pack=pack[:4]
             send(cob,pack[:-1] if inject and scenario=='dlc' else pack)
 
 
@@ -169,7 +173,8 @@ def main():
                 d.state={0x80:127,1:5,2:4}.get(data[0],d.state)
                 d.next_hb=0
             elif cob==0x80:
-                for d in drives.values(): d.on_sync(send,args.scenario)
+                fault=args.scenario=='fault' and (args.trace.parent/'inject-missing').exists()
+                for d in drives.values(): d.on_sync(send,'missing' if fault else args.scenario)
             elif 0x601<=cob<=0x606:
                 d=drives[cob-0x600]
                 response=d.sdo(data,args.scenario)
