@@ -34,6 +34,10 @@ class Drive:
             (0x607c,0,0,4), (0x6085,0,200,4),
         ]:
             self.store(idx,sub,val,size)
+        self.objects[0x1001,0]=bytes(1)
+        self.objects[0x1008,0]=bytes(range(64))
+        self.objects[0x1009,0]=b'test'
+        self.objects[0x6084,0]=bytes(4)
         self.objects[0x100a,0] = b'eRob-simulation-1.9'
         for base, cob in [(0x1400,0x200),(0x1800,0x180)]:
             for i in range(4):
@@ -97,6 +101,7 @@ class Drive:
                     return abort(0x06040041)
             self.objects[key]=data[4:4+size]
             self.last_write=key
+            if scenario=='mailbox' and key==(0x6084,0): return None
             return b'\x60'+head+bytes(4)
         return abort(0x05040001)
 
@@ -168,6 +173,7 @@ def main():
             elif 0x601<=cob<=0x606:
                 d=drives[cob-0x600]
                 response=d.sdo(data,args.scenario)
+                if args.scenario=='mailbox' and data[:4]==b'\x40\x09\x10\x00': time.sleep(0.02)
                 if response: send(0x580+d.node,response)
             elif 0x201<=cob<=0x206 and len(data)==7:
                 d=drives[cob-0x200]

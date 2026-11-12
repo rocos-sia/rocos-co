@@ -56,8 +56,12 @@ SdoTransfer::Result SdoTransfer::step(uint64_t now) noexcept {
         dispatched_ = true;
     } else {
         r = CO_SDOclientUpload(client_, elapsed, false, &abort, &indicated, &transferred, nullptr);
-        if (indicated > capacity_ || transferred > capacity_ || r == CO_SDO_RT_uploadDataBufferFull)
+        if (indicated > capacity_ || transferred > capacity_)
             return finish(Result::too_large);
+        // The stack reserves room for a full 7-byte segment before issuing its next request.
+        // Drain completed segments even when the next (final) segment has only one byte.
+        if (r == CO_SDO_RT_uploadDataBufferFull || r == CO_SDO_RT_ok_communicationEnd)
+            size_ += CO_SDOclientUploadBufRead(client_, bytes_.data() + size_, capacity_ - size_);
     }
     if (r == CO_SDO_RT_endedWithServerAbort) {
         abort_ = abort;
@@ -67,7 +71,6 @@ SdoTransfer::Result SdoTransfer::step(uint64_t now) noexcept {
         return finish(abort == CO_SDO_AB_TIMEOUT ? Result::deadline : Result::failed);
     if (r == CO_SDO_RT_ok_communicationEnd) {
         if (!writing_) {
-            size_ = CO_SDOclientUploadBufRead(client_, bytes_.data(), capacity_);
             if (size_ != transferred)
                 return finish(Result::failed);
         }

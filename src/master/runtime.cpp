@@ -13,8 +13,8 @@ void sleepUntil(uint64_t ns) noexcept {
 } // namespace
 MasterRuntime::MasterRuntime(const MasterConfig &c, Transport &b, ProcessExchange &a,
                              const volatile sig_atomic_t &quit)
-    : cfg_(c), bus_(b), stack_(b, c), app_(a), nodes_(c.slaves.size()), window_(c), input_(c.input_bytes),
-      output_(c.output_bytes), stop_(c.output_bytes), quit_(quit) {
+    : cfg_(c), bus_(b), stack_(b, c), mailbox_sdo_(stack_.client()), app_(a), nodes_(c.slaves.size()),
+      window_(c), input_(c.input_bytes), output_(c.output_bytes), stop_(c.output_bytes), quit_(quit) {
     slot_.fill(-1);
     for (size_t i = 0; i < c.slaves.size(); ++i)
         slot_[c.slaves[i].node_id] = i;
@@ -30,6 +30,8 @@ void MasterRuntime::fail(const char *reason, uint16_t id) noexcept {
         stats_.fault = reason;
         stats_.fault_id = id;
         stats_.fault_ns = monotonicNs();
+        if (id >= 0x701 && id <= 0x77f)
+            ++stats_.heartbeat_losses;
     }
 }
 void MasterRuntime::accept(const Frame &f) noexcept {
@@ -83,6 +85,8 @@ void MasterRuntime::accept(const Frame &f) noexcept {
             }
             if (event == FeedbackWindow::Event::complete) {
                 stats_.feedback_ns = f.stamp_ns;
+                stats_.max_feedback_lag_ns =
+                    std::max(stats_.max_feedback_lag_ns, f.stamp_ns - stats_.last_sync);
                 stack_.readFeedback(input_.data());
                 stats_.od_ns = monotonicNs();
                 ++stats_.complete;
@@ -105,6 +109,8 @@ void MasterRuntime::pump() {
         if (r == Io::ignored)
             continue;
         if (r != Io::ok) {
+            if (r == Io::overflow)
+                ++stats_.rx_overflows;
             if (r == Io::bus_off || r == Io::disconnected)
                 link_ok_ = false;
             fail(r == Io::bus_off ? "bus-off" : r == Io::overflow ? "RX overflow" : "CAN receive failure");
@@ -123,6 +129,9 @@ void MasterRuntime::pump() {
                 now - nodes_[i].last_heartbeat > uint64_t(cfg_.slaves[i].heartbeat_timeout_ms) * 1000000)
                 fail("heartbeat timeout", 0x700 + cfg_.slaves[i].node_id);
     app_.tick(now, nodes_);
+    if (!app_.healthy())
+        fail("SHM cycle notification failed");
+    app_.manage(mailbox_sdo_, now, false, !stats_.fault && !stopping_);
 }
 bool MasterRuntime::allOperational(uint64_t now) const noexcept {
     for (size_t i = 0; i < nodes_.size(); ++i) {
@@ -166,6 +175,7 @@ void MasterRuntime::runCycles() {
                 }
                 armed_ = true;
             }
+            app_.manage(mailbox_sdo_, now, true, !stats_.fault && !stopping_);
             window_.begin(now, due_);
             in_window_ = true;
             sampled_ = false;
@@ -173,8 +183,18 @@ void MasterRuntime::runCycles() {
                 fail("SYNC transmit backlog");
                 break;
             }
+            if (stats_.syncs) {
+                const uint64_t delta = now - stats_.last_sync;
+                stats_.max_sync_jitter_ns =
+                    std::max(stats_.max_sync_jitter_ns, delta > period ? delta - period : period - delta);
+            }
             ++stats_.syncs;
             stats_.last_sync = now;
+            if (!cfg_.input_bytes && ready_) {
+                ++stats_.complete;
+                stats_.last_published = stats_.syncs;
+                app_.publish(nullptr, stats_);
+            }
             sample_at_ = due_ - period / 2;
         }
         if (ready_ && !sampled_ && now >= sample_at_) {
@@ -194,6 +214,9 @@ void MasterRuntime::runCycles() {
                 break;
             }
             stats_.last_target_ns = monotonicNs();
+            const uint64_t margin = due_ > stats_.last_target_ns ? due_ - stats_.last_target_ns : 0;
+            stats_.min_target_margin_ns =
+                stats_.commands ? std::min(stats_.min_target_margin_ns, margin) : margin;
             ++stats_.commands;
             sampled_ = true;
         }
@@ -298,9 +321,14 @@ void MasterRuntime::run() {
     if (cfg_.state == "preop") {
         app_.ready(nodes_, nullptr);
         started_ = monotonicNs();
+        uint64_t boundary = started_;
         while (!quit_ && !stats_.fault) {
             pump();
             auto now = monotonicNs();
+            if (now >= boundary) {
+                advanceDeadline(now, uint64_t(cfg_.period_us) * 1000, boundary);
+                app_.manage(mailbox_sdo_, now, true, !stats_.fault);
+            }
             if (cfg_.duration_ms && now - started_ >= uint64_t(cfg_.duration_ms) * 1000000)
                 break;
             sleepUntil(now + 150000);

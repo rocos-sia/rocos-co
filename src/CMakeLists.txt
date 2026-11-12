@@ -1,4 +1,4 @@
-add_library(rocos_co_core STATIC config/master_config.cpp can/socket_can.cpp canopen/stack.cpp canopen/sdo.cpp master/commission.cpp master/cycle.cpp master/runtime.cpp)
+add_library(rocos_co_core STATIC config/master_config.cpp can/socket_can.cpp canopen/stack.cpp canopen/sdo.cpp master/commission.cpp master/cycle.cpp master/runtime.cpp shm/shm_owner.cpp report/terminal.cpp)
 target_compile_features(rocos_co_core PUBLIC cxx_std_17)
 target_include_directories(rocos_co_core PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}/generated")
 target_compile_options(rocos_co_core PRIVATE -Wall -Wextra -Wpedantic)

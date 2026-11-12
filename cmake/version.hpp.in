@@ -1,2 +1,3 @@
 #pragma once
 #define ROCOS_CO_VERSION "@ROCOS_CO_VERSION@"
+#define ROCOS_CO_STACK_REV "@ROCOS_CO_STACK_REV@"

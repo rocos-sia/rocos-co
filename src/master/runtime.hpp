@@ -7,6 +7,8 @@ namespace rocos_co {
 /** Host timestamps (monotonic ns). A successful socket send is a host submission time. */
 struct CycleStats {
     uint64_t syncs{}, complete{}, commands{}, missed{}, last_sync{}, feedback_ns{}, od_ns{}, last_target_ns{};
+    uint64_t max_sync_jitter_ns{}, max_feedback_lag_ns{}, min_target_margin_ns{}, rx_overflows{},
+        heartbeat_losses{};
     uint64_t ready_sync{}, last_published{}, stop_syncs{};
     uint64_t fault_ns{}, stop_status_seen{}, stop_state_confirmed{}, stop_velocity_seen{};
     std::array<uint16_t, 50> stop_status{};
@@ -18,6 +20,8 @@ struct CycleStats {
 /** Event-loop callbacks. Buffers are fixed-size process images, valid only during the call. */
 class ProcessExchange {
   public:
+    virtual bool healthy() const noexcept { return true; }
+    virtual void manage(SdoTransfer &, uint64_t, bool, bool) noexcept {}
     virtual ~ProcessExchange() = default;
     virtual void ready(const std::vector<NodeObservation> &, const uint8_t *input) = 0;
     virtual void publish(const uint8_t *input, const CycleStats &stats) noexcept = 0;
@@ -30,6 +34,7 @@ class MasterRuntime {
     const MasterConfig &cfg_;
     Transport &bus_;
     Stack stack_;
+    SdoTransfer mailbox_sdo_;
     ProcessExchange &app_;
     std::vector<NodeObservation> nodes_;
     FeedbackWindow window_;
