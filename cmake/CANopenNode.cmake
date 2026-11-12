@@ -1,4 +1,5 @@
 add_library(canopennode STATIC
+    "${PROJECT_SOURCE_DIR}/src/canopen/port/driver.c"
     "${PROJECT_SOURCE_DIR}/od/generated/OD.c")
 foreach(source IN ITEMS CANopen.c 301/CO_ODinterface.c 301/CO_NMT_Heartbeat.c
         301/CO_HBconsumer.c 301/CO_Emergency.c 301/CO_SYNC.c 301/CO_PDO.c
