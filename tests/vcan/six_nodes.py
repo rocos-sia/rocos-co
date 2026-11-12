@@ -113,12 +113,13 @@ class Drive:
             if scenario=='emcy': send(0x80+self.node,b'\x10\x81'+bytes(6))
             if scenario=='reboot': send(0x700+self.node,b'\0')
             if scenario=='busoff': send(socket.CAN_ERR_FLAG|0x40,bytes(8))
+            if scenario=='second-sync': send(0x80,b'')
         if self.pending is not None:
             cw,pos,mode=struct.unpack('<Hib',self.pending)
             self.pending=None
             self.mode=mode
             if cw==2:
-                self.status=0x07
+                self.status=0x27 if scenario=='no-stop' and self.node==5 else 0x07
             elif cw&0x8f==6: self.status=0x21
             elif cw&0x8f==7: self.status=0x23
             elif cw&0x8f==0: self.status=0x40

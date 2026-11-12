@@ -33,7 +33,7 @@ class Stack {
     bool dispatch(const Frame &frame) noexcept;
     /** Progress asynchronous stack services once. elapsed_us uses monotonic time. */
     bool service(uint32_t elapsed_us) noexcept;
-    /// Submit an NMT command to the selected remote node (zero addresses all nodes).
+    /// Submit an NMT command to one remote node in the range 1 to 127.
     CO_ReturnError_t nmt(uint8_t node, CO_NMT_command_t cmd) noexcept;
     /// Enter Operational on the local CANopenNode instance.
     void operational() noexcept;

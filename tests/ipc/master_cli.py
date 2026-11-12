@@ -24,11 +24,11 @@ with tempfile.TemporaryDirectory() as tmp:
                 result=subprocess.run([client,str(shm_id),mode],capture_output=True,text=True,timeout=6)
                 assert result.returncode==0,(mode,result.stdout,result.stderr)
             conflict=subprocess.run(args,capture_output=True,text=True,timeout=2)
-            assert conflict.returncode and 'owner lock' in conflict.stderr,conflict.stderr
+            assert conflict.returncode == 3 and 'owner lock' in conflict.stderr,conflict.stderr
             if state!='fault': proc.terminate()
             out,err=proc.communicate(timeout=4)
             if state=='fault':
-                assert proc.returncode and 'TPDO missing' in err and 'velocity unconfirmed' in err,(out,err)
+                assert proc.returncode == 4 and 'TPDO missing' in err and 'velocity unconfirmed' in err,(out,err)
             else:
                 assert proc.returncode==0 and '[Ready]' in out and '[Shutdown]' in out and not err,(out,err)
             assert '[Startup]' in out and 'runtime license' in out and 'firmware eRob-simulation-1.9' in out
@@ -41,7 +41,7 @@ with tempfile.TemporaryDirectory() as tmp:
         # Failed open before ready must release the bus and both PDO owner locks.
         config.write_text(source.replace('interface: '+interface,'interface: absent_roc'))
         bad=subprocess.run(args,capture_output=True,text=True,timeout=2)
-        assert bad.returncode and not any(Path('/dev/shm',p+str(shm_id)).exists() for p in ('ecm_v2_','pd_input_v2_','pd_output_v2_'))
+        assert bad.returncode == 3 and not any(Path('/dev/shm',p+str(shm_id)).exists() for p in ('ecm_v2_','pd_input_v2_','pd_output_v2_'))
     finally:
         sim.terminate()
         sim.wait(timeout=2)

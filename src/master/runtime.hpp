@@ -11,6 +11,8 @@ struct CycleStats {
         heartbeat_losses{};
     uint64_t ready_sync{}, last_published{}, stop_syncs{};
     uint64_t fault_ns{}, stop_status_seen{}, stop_state_confirmed{}, stop_velocity_seen{};
+    /// First host RX timestamp (CLOCK_MONOTONIC ns) for a qualifying post-stop status on each slot.
+    std::array<uint64_t, 50> first_stop_status_ns{};
     std::array<uint16_t, 50> stop_status{};
     std::array<int32_t, 50> stop_velocity{};
     uint16_t fault_id{};
@@ -48,8 +50,9 @@ class MasterRuntime {
     CycleStats stats_;
     const volatile sig_atomic_t &quit_;
     uint64_t last_service_{}, stage_deadline_{}, due_{}, sample_at_{}, started_{}, op_request_{};
-    uint64_t target_wire_ns_{}, stop_sync_ns_{};
+    uint64_t target_wire_ns_{}, first_stop_batch_ns_{}, stop_sync_ns_{};
     unsigned good_{};
+    bool external_sync_seen_{};
     bool armed_{}, ready_{}, sampled_{}, in_window_{}, link_ok_{true}, session_running_{}, stopping_{};
     void pump();
     void accept(const Frame &) noexcept;

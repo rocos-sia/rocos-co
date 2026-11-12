@@ -35,9 +35,14 @@ elif scenario=='preop':
     assert not any(r[1]=='master' and r[2]=='080' for r in rows)
 else:
     assert 'READY op' in report and 'targets 0 ' not in report,report
-    faults={'missing':'TPDO missing','dlc':'feedback window','emcy':'node EMCY','reboot':'NMT state','busoff':'bus-off'}
+    faults={'missing':'TPDO missing','dlc':'feedback window','emcy':'node EMCY','reboot':'NMT state','busoff':'bus-off','no-stop':'group stop feedback unconfirmed','second-sync':'external SYNC producer'}
     if scenario in faults:
         assert proc.returncode and faults[scenario] in report, report
+        if scenario=='no-stop':
+            assert 'status_mask 47' in report,report
+        if scenario=='second-sync':
+            idx=next(i for i,row in enumerate(rows) if row[1:3]==['node','080'])
+            assert not any(row[1:3]==['master','080'] for row in rows[idx+1:])
         if scenario in ('missing','dlc'):
             assert 'published 23' in report and 'velocity_mask 47' in report, report
     else:

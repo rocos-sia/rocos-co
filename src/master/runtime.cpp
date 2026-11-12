@@ -42,6 +42,9 @@ void MasterRuntime::accept(const Frame &f) noexcept {
         return;
     }
     if (f.id == 0x80) {
+        external_sync_seen_ = true;
+        if (stopping_ && !stop_sync_ns_ && first_stop_batch_ns_ && f.stamp_ns >= first_stop_batch_ns_)
+            stop_sync_ns_ = f.stamp_ns;
         fail("external SYNC producer", f.id);
         return;
     }
@@ -258,9 +261,11 @@ void MasterRuntime::observeStop(const Frame &f) noexcept {
                     stats_.stop_status[i] = sw;
                     stats_.stop_status_seen |= bit;
                     // CiA 402 quick-stop active, switch-on disabled, or ready to switch on.
-                    if ((sw & 0x6f) == 0x07 || (sw & 0x4f) == 0x40 || (sw & 0x6f) == 0x21)
+                    if ((sw & 0x6f) == 0x07 || (sw & 0x4f) == 0x40 || (sw & 0x6f) == 0x21) {
+                        if (!stats_.first_stop_status_ns[i])
+                            stats_.first_stop_status_ns[i] = f.stamp_ns;
                         stats_.stop_state_confirmed |= bit;
-                    else
+                    } else
                         stats_.stop_state_confirmed &= ~bit;
                 }
                 if (e.index == 0x606c && e.bytes == 4) {
@@ -283,33 +288,60 @@ void MasterRuntime::shutdownGroup() noexcept {
     const uint64_t period = uint64_t(cfg_.period_us) * 1000;
     const uint64_t end = monotonicNs() + uint64_t(cfg_.command_timeout_ms) * 1000000;
     uint64_t next = monotonicNs() + period;
-    const uint64_t all = (uint64_t{1} << nodes_.size()) - 1;
+    uint64_t status_required = 0, velocity_expected = 0;
+    for (size_t i = 0; i < cfg_.slaves.size(); ++i) {
+        const auto &axis = cfg_.slaves[i];
+        const uint64_t bit = uint64_t{1} << i;
+        for (const auto &pdo : axis.rx_pdos)
+            for (const auto &entry : pdo.entries)
+                if (entry.index == 0x6040 && !entry.sub_index && entry.bytes == 2)
+                    status_required |= bit;
+        for (const auto &pdo : axis.tx_pdos)
+            for (const auto &entry : pdo.entries)
+                if ((status_required & bit) && entry.index == 0x606c && !entry.sub_index && entry.bytes == 4)
+                    velocity_expected |= bit;
+    }
+    auto confirmed = [&] {
+        return (stop_.empty() || stop_sync_ns_) &&
+               (stats_.stop_state_confirmed & status_required) == status_required &&
+               (stats_.stop_velocity_seen & velocity_expected) == velocity_expected;
+    };
     while (link_ok_ && monotonicNs() < end) {
         if (!stack_.sendTargets(stop_.data())) {
+            fail("stop target transmit failed");
             stack_.discardPending();
             break;
         }
+        if (!first_stop_batch_ns_)
+            first_stop_batch_ns_ = monotonicNs();
         while (monotonicNs() < next && monotonicNs() < end && link_ok_) {
             pump();
             sleepUntil(std::min<uint64_t>(next, monotonicNs() + 150000));
-            if (stats_.stop_state_confirmed == all && stats_.stop_velocity_seen == all)
+            if (confirmed())
                 break;
         }
-        if (stats_.stop_state_confirmed == all && stats_.stop_velocity_seen == all)
+        if (confirmed())
             break;
         if (!link_ok_ || monotonicNs() >= end)
             break;
         auto sent = monotonicNs();
-        if (!stack_.sync())
-            break;
-        if (!stop_sync_ns_)
-            stop_sync_ns_ = sent;
-        ++stats_.stop_syncs;
+        if (!external_sync_seen_) {
+            if (!stack_.sync()) {
+                fail("stop SYNC transmit failed", 0x80);
+                break;
+            }
+            if (!stop_sync_ns_)
+                stop_sync_ns_ = sent;
+            ++stats_.stop_syncs;
+        }
         next = sent + period;
     }
+    if (!confirmed())
+        fail("group stop feedback unconfirmed");
     if (link_ok_)
         for (const auto &s : cfg_.slaves)
-            stack_.nmt(s.node_id, CO_NMT_ENTER_PRE_OPERATIONAL);
+            if (stack_.nmt(s.node_id, CO_NMT_ENTER_PRE_OPERATIONAL) != CO_ERROR_NO)
+                fail("shutdown NMT transmit failed");
 }
 void MasterRuntime::run() {
     Commissioner commissioner(cfg_, stack_, nodes_, [&] {

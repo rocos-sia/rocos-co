@@ -25,7 +25,7 @@ if(ROCOS_CO_ENABLE_VCAN_TESTS)
     set_tests_properties(vcan_socket_vectors PROPERTIES LABELS vcan RUN_SERIAL TRUE TIMEOUT 10)
 endif()
 if(ROCOS_CO_ENABLE_VCAN_TESTS)
-    foreach(scenario IN ITEMS cold boot warm verify preop bad-id partial-abort verify-bad missing dlc emcy reboot busoff)
+    foreach(scenario IN ITEMS cold boot warm verify preop bad-id partial-abort verify-bad missing dlc emcy reboot busoff no-stop second-sync)
         add_test(NAME vcan_${scenario} COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/vcan/commission_test.py"
             $<TARGET_FILE:runtime_probe> "${PROJECT_SOURCE_DIR}/config/erob_6axis/co.yaml" "${ROCOS_CO_VCAN_INTERFACE}"
             "${scenario}" "${PROJECT_BINARY_DIR}/traces")
@@ -59,3 +59,6 @@ if(ROCOS_CO_ENABLE_VCAN_TESTS AND ROCOS_CO_APP_EXECUTABLE)
         --app "${ROCOS_CO_APP_EXECUTABLE}" --build "${PROJECT_BINARY_DIR}" --interface "${ROCOS_CO_VCAN_INTERFACE}")
     set_tests_properties(real_app_six_axes PROPERTIES LABELS "vcan;app" RUN_SERIAL TRUE TIMEOUT 120)
 endif()
+add_test(NAME bench_trace_analysis COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/unit/bench_trace_test.py"
+    "${PROJECT_SOURCE_DIR}/scripts/analyze-bench-trace.py")
+set_tests_properties(bench_trace_analysis PROPERTIES LABELS unit)

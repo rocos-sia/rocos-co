@@ -29,6 +29,8 @@ class ShmOwner final : public ProcessExchange {
   public:
     explicit ShmOwner(const MasterConfig &);
     ~ShmOwner() override;
+    /// True once the v2 owner has published the verified instance for client attachment.
+    bool isReady() const noexcept { return published_.load(std::memory_order_acquire); }
     void ready(const std::vector<NodeObservation> &, const uint8_t *input) override;
     void publish(const uint8_t *input, const CycleStats &) noexcept override;
     void sample(uint8_t *output, size_t bytes) noexcept override;

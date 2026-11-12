@@ -15,7 +15,7 @@ def run(args, error=None, contains=None):
         assert proc.returncode == 0, (proc.stderr, args)
         assert not contains or contains in proc.stdout, proc.stdout
     else:
-        assert proc.returncode != 0 and error in proc.stderr, (proc.returncode, proc.stderr, error)
+        assert proc.returncode == 2 and error in proc.stderr, (proc.returncode, proc.stderr, error)
 
 def slave(i):
     return dict(id=i, node_id=i+1, name=f'axis{i}', identity=dict(vendor_id=1, product_code=2),

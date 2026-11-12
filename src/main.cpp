@@ -10,6 +10,7 @@
 #include <stdexcept>
 
 namespace {
+enum class ExitStatus { configuration = 2, startup = 3, runtime = 4 };
 volatile sig_atomic_t quit_requested = 0;
 void handleSignal(int) { quit_requested = 1; }
 
@@ -34,6 +35,7 @@ int main(int argc, char **argv) {
         usage(std::cout);
         return 0;
     }
+    ExitStatus failure = ExitStatus::configuration;
     try {
         std::string path;
         rocos_co::Overrides cli;
@@ -64,6 +66,7 @@ int main(int argc, char **argv) {
         rocos_co::printStartup(std::cout, config, cli);
         if (seen.count("--check-config"))
             return 0;
+        failure = ExitStatus::startup;
         std::signal(SIGINT, handleSignal);
         std::signal(SIGTERM, handleSignal);
         rocos_co::ShmOwner owner(config);
@@ -83,6 +86,8 @@ int main(int argc, char **argv) {
         try {
             runtime.run();
         } catch (...) {
+            if (owner.isReady())
+                failure = ExitStatus::runtime;
             rocos_co::printSummary(std::cerr, config, runtime.stats());
             throw;
         }
@@ -90,6 +95,6 @@ int main(int argc, char **argv) {
         return 0;
     } catch (const std::exception &e) {
         std::cerr << e.what() << "\n";
-        return 1;
+        return static_cast<int>(failure);
     }
 }

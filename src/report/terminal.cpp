@@ -112,6 +112,8 @@ void printSummary(std::ostream &out, const MasterConfig &c, const CycleStats &s)
             out << s.stop_velocity[i];
         else
             out << "unconfirmed";
+        if (s.first_stop_status_ns[i])
+            out << " | first stop status RX mono (ns) " << s.first_stop_status_ns[i];
         out << '\n';
     }
 }
