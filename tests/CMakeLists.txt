@@ -62,3 +62,9 @@ endif()
 add_test(NAME bench_trace_analysis COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/unit/bench_trace_test.py"
     "${PROJECT_SOURCE_DIR}/scripts/analyze-bench-trace.py")
 set_tests_properties(bench_trace_analysis PROPERTIES LABELS unit)
+
+# Build on demand; this tool controls real hardware only when explicitly invoked.
+add_executable(erob_csp_bench EXCLUDE_FROM_ALL bench/erob_csp.cpp)
+target_compile_features(erob_csp_bench PRIVATE cxx_std_17)
+target_include_directories(erob_csp_bench PRIVATE "${ROCOS_CO_CLIENT_SHM_INCLUDE}")
+target_link_libraries(erob_csp_bench PRIVATE Threads::Threads rt)

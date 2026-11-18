@@ -1,0 +1,2 @@
+bc71a4f8a8e5d08aee3fe7de496ca06f030689a636744b87610abd2ba23ca1b1  build/debug/bin/rocos_co_master
+d8e95b39f8f3597e9fcedaee0d264befb188c1412587a13f28ac2eaf9439bca4  build/debug/bin/erob_csp_bench

@@ -27,6 +27,15 @@ early = sorted([(100, 0x80, 0), (end, 0x80, 0)] +
                [(110+n, 0x200+n, 7) for n in nodes])
 assert tool["analyze"](early, nodes, 1, 1, None)["phase_errors"] == 1
 
+# A three-axis 10 ms bench must use its actual period and expected COB-ID set.
+three = [(100, 0x80, 0)]
+for n in range(1, 4):
+    three.extend([(100+n, 0x180+n, 6), (110+n, 0x280+n, 5), (200+n, 0x200+n, 7)])
+three = sorted(three + [(10_000_100, 0x80, 0)])
+result = tool["analyze"](three, range(1, 4), 1, 1, None, 10_000_000)
+assert result["period_target_ns"] == 10_000_000 and result["max_abs_sync_jitter_ns"] == 0
+assert result["incomplete_windows"] == 0 and result["phase_errors"] == 0
+
 lines = ["(1730000000.123456789) can0 080#", "(1730000000.123456790) can1 181#1234",
          "(1730000000.123456791) can0 00000181#1234", "(1730000000.123456792) can0 181#1234"]
 assert list(tool["read_frames"](lines, "can0")) == [

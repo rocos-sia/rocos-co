@@ -1,0 +1,7 @@
+slot=0 serial=0 firmware=150403171
+slot=1 serial=0 firmware=150403171
+slot=2 serial=0 firmware=150403171
+slot=0 status=0x240 position=-24 velocity=2 mode=8 target=-17
+slot=1 status=0x240 position=5099 velocity=0 mode=8 target=5111
+slot=2 status=0x240 position=65133 velocity=-10 mode=8 target=65143
+SHM period us min/avg/max=7534.1/10000/12478.3

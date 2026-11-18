@@ -1,0 +1,4 @@
+slot=0 serial=0 firmware=150403171
+slot=1 serial=0 firmware=150403171
+slot=2 serial=0 firmware=150403171
+drive fault at slot 0

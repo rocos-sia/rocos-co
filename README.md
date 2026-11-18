@@ -8,6 +8,8 @@ ROCOS-CO 是 ROCOS 控制器的 CANopen 主站。它作为独立进程运行，�
 
 **验证状态**　首版面向六个 ZeroErr eRob 关节，采用 CiA 402 周期同步位置模式（CSP），目标周期为 8 ms（125 Hz）。M1–M4 已完成软件验证，包括真实 App 与六个虚拟 CANopen 节点的闭环联调。六轴在同一 SYNC 锁存、最坏延迟、漏拍和机械停稳时间仍待 M5 实测。[软件联调报告](docs/validation/m4/README.md) · [六轴台架记录](docs/validation/m5/README.md)
 
+三台 eRob90H100T-BM-18CN 已完成 1 Mbit/s、10 ms 周期下的 SHM 与 CSP 实物运动验证，提供[三轴配置](config/erob_3axis/co.yaml)和[逐轴使能测试程序及记录](docs/validation/erob-3axis-2026-11-18/README.md)。长期运行约 40 分钟后出现一次反馈窗口异常并保护停机，原因待定位；本次结果不替代六轴 M5 验收。
+
 ## 快速开始
 
 在 Ubuntu 22.04 x86_64 上克隆项目并初始化两个锁定提交的子模块。安装脚本通过 apt 安装 C/C++ 工具链、CMake、Ninja、yaml-cpp 开发包以及 CAN 调试工具，普通用户直接执行即可。

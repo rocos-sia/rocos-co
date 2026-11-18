@@ -1,0 +1,7 @@
+slot=0 serial=0 firmware=150403171
+slot=1 serial=0 firmware=150403171
+slot=2 serial=0 firmware=150403171
+slot=0 excursion_counts=4098 max_tracking_error_counts=31 return_error_counts=-4
+slot=1 excursion_counts=6146 max_tracking_error_counts=43 return_error_counts=-3
+slot=2 excursion_counts=8194 max_tracking_error_counts=57 return_error_counts=-4
+state transition timeout: disable_operation

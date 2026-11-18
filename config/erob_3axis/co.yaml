@@ -1,0 +1,109 @@
+# eRob90H100T-BM-18CN: brake, multi-turn, CANopen, 524288 count/output revolution.
+# PDO position is raw output-encoder counts; do not multiply by gearbox ratio.
+version: 1
+master:
+  id: 2
+  cycle: 10000                   # us；三轴 eRob90H100T-BM-18CN，100 Hz
+  cpuidx: null                   # 继承亲和性
+  duration: 0                    # ms；达到目标后计时，0 持续运行
+  verbose: diagnostic
+  state: op                      # CANopen 启动目标，preop 用于维护
+  transport: socketcan
+  interface: can0
+  bitrate: 1000000               # bit/s，期望的实际总线速率
+  node_id: 127                   # 主站本地 Node-ID
+  heartbeat_ms: 100              # 主站生产心跳周期
+  preop_timeout_ms: 10000
+  op_timeout_ms: 10000
+  command_timeout_ms: 1000
+slaves:
+  - id: 0
+    node_id: 1                   # 2026-11-18 SDO 实测 Node-ID
+    name: eRob90H100T-J1
+    identity: {vendor_id: 0x5A65726F, product_code: 0x26483052, revision: 0x00020111}  # eRob EDS 身份，启动逐台读回
+    heartbeat_ms: 100            # 从站 0x1017:00 的期望生产周期
+    heartbeat_timeout_ms: 300    # 主站监测从站，示例
+    master_heartbeat_timeout_ms: 300  # 从站监测主站，示例；与主站监测从站分别设置
+    pdo_policy: configure        # eRob 建议重映射并读回；已预置者可用 verify
+    init_commands: []
+    rx_pdos:                     # 从站接收 → SHM Output
+      - index: 0x1600
+        cob_id: 0x201
+        transmission_type: 1
+        entries:
+          - {name: Control word, index: 0x6040, sub_index: 0, bit_length: 16}
+          - {name: Target Position, index: 0x607A, sub_index: 0, bit_length: 32}
+          - {name: Mode of operation, index: 0x6060, sub_index: 0, bit_length: 8}
+    tx_pdos:                     # 从站发送 → SHM Input
+      - index: 0x1A00
+        cob_id: 0x181
+        transmission_type: 1
+        entries:
+          - {name: Status word, index: 0x6041, sub_index: 0, bit_length: 16}
+          - {name: Position actual value, index: 0x6064, sub_index: 0, bit_length: 32}
+      - index: 0x1A01
+        cob_id: 0x281
+        transmission_type: 1
+        entries:
+          - {name: Velocity actual value, index: 0x606C, sub_index: 0, bit_length: 32}
+          - {name: Mode display, index: 0x6061, sub_index: 0, bit_length: 8}
+  - id: 1
+    node_id: 2                   # 2026-11-18 SDO 实测 Node-ID
+    name: eRob90H100T-J2
+    identity: {vendor_id: 0x5A65726F, product_code: 0x26483052, revision: 0x00020111}  # eRob EDS 身份，启动逐台读回
+    heartbeat_ms: 100            # 从站 0x1017:00 的期望生产周期
+    heartbeat_timeout_ms: 300    # 主站监测从站，示例
+    master_heartbeat_timeout_ms: 300  # 从站监测主站，示例；与主站监测从站分别设置
+    pdo_policy: configure        # eRob 建议重映射并读回；已预置者可用 verify
+    init_commands: []
+    rx_pdos:                     # 从站接收 → SHM Output
+      - index: 0x1600
+        cob_id: 0x202
+        transmission_type: 1
+        entries:
+          - {name: Control word, index: 0x6040, sub_index: 0, bit_length: 16}
+          - {name: Target Position, index: 0x607A, sub_index: 0, bit_length: 32}
+          - {name: Mode of operation, index: 0x6060, sub_index: 0, bit_length: 8}
+    tx_pdos:                     # 从站发送 → SHM Input
+      - index: 0x1A00
+        cob_id: 0x182
+        transmission_type: 1
+        entries:
+          - {name: Status word, index: 0x6041, sub_index: 0, bit_length: 16}
+          - {name: Position actual value, index: 0x6064, sub_index: 0, bit_length: 32}
+      - index: 0x1A01
+        cob_id: 0x282
+        transmission_type: 1
+        entries:
+          - {name: Velocity actual value, index: 0x606C, sub_index: 0, bit_length: 32}
+          - {name: Mode display, index: 0x6061, sub_index: 0, bit_length: 8}
+  - id: 2
+    node_id: 3                   # 2026-11-18 SDO 实测 Node-ID
+    name: eRob90H100T-J3
+    identity: {vendor_id: 0x5A65726F, product_code: 0x26483052, revision: 0x00020111}  # eRob EDS 身份，启动逐台读回
+    heartbeat_ms: 100            # 从站 0x1017:00 的期望生产周期
+    heartbeat_timeout_ms: 300    # 主站监测从站，示例
+    master_heartbeat_timeout_ms: 300  # 从站监测主站，示例；与主站监测从站分别设置
+    pdo_policy: configure        # eRob 建议重映射并读回；已预置者可用 verify
+    init_commands: []
+    rx_pdos:                     # 从站接收 → SHM Output
+      - index: 0x1600
+        cob_id: 0x203
+        transmission_type: 1
+        entries:
+          - {name: Control word, index: 0x6040, sub_index: 0, bit_length: 16}
+          - {name: Target Position, index: 0x607A, sub_index: 0, bit_length: 32}
+          - {name: Mode of operation, index: 0x6060, sub_index: 0, bit_length: 8}
+    tx_pdos:                     # 从站发送 → SHM Input
+      - index: 0x1A00
+        cob_id: 0x183
+        transmission_type: 1
+        entries:
+          - {name: Status word, index: 0x6041, sub_index: 0, bit_length: 16}
+          - {name: Position actual value, index: 0x6064, sub_index: 0, bit_length: 32}
+      - index: 0x1A01
+        cob_id: 0x283
+        transmission_type: 1
+        entries:
+          - {name: Velocity actual value, index: 0x606C, sub_index: 0, bit_length: 32}
+          - {name: Mode display, index: 0x6061, sub_index: 0, bit_length: 8}

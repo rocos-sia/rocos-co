@@ -1,0 +1,7 @@
+slot=0 serial=0 firmware=150403171
+slot=1 serial=0 firmware=150403171
+slot=2 serial=0 firmware=150403171
+slot=0 excursion_counts=65542 max_tracking_error_counts=404 return_error_counts=-3
+slot=1 excursion_counts=65546 max_tracking_error_counts=400 return_error_counts=-1
+slot=2 excursion_counts=65543 max_tracking_error_counts=404 return_error_counts=-4
+PASS CSP motion and disabled final state

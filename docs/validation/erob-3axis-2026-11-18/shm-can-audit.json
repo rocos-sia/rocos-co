@@ -1,0 +1,10 @@
+{
+  "shm_rows": 3147,
+  "compared_pdo_frames": 9441,
+  "mismatch_count": 0,
+  "first_mismatches": [],
+  "max_tpdo1_to_shm_timestamp_ns": 862000,
+  "first_sync": 24864,
+  "last_sync": 25911,
+  "duration_s": 10.480108
+}

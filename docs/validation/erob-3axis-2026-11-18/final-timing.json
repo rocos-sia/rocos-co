@@ -1,0 +1,10 @@
+{
+  "period_target_ns": 10000000,
+  "closed_windows": 1048,
+  "incomplete_windows": 0,
+  "phase_errors": 0,
+  "max_abs_sync_jitter_ns": 579000,
+  "max_feedback_complete_after_ns": 755000,
+  "min_last_target_to_sync_ns": 4383000,
+  "invalid_windows_by_cob_id": {}
+}

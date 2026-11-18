@@ -1,0 +1,80 @@
+[Startup] ----------------------------------------
+  backend                   : co (3) / CANopenNode 9b8beed8367241e96ac03f916cd5a500bcb2cf23 / SocketCAN
+  product                   : 0.0.0-rc.6
+[Config] ----------------------------------------
+ROCOS-CO 0.0.0-rc.6
+Configuration /home/think/Documents/GitHub/rocos-co/config/erob_3axis/co.yaml
+SHM ID 2 | cycle 10000 us | CPU inherited
+SocketCAN can0 | 1000000 bit/s | master node 127 | target op
+Slot 0 | node 1 | eRob90H100T-J1
+Input Status word | COB-ID 0x181 | OD 0x6041:0 | DLC 6 | frame+0 | image+0 | 16 bit | raw drive units
+Input Position actual value | COB-ID 0x181 | OD 0x6064:0 | DLC 6 | frame+2 | image+2 | 32 bit | raw drive units
+Input Velocity actual value | COB-ID 0x281 | OD 0x606c:0 | DLC 5 | frame+0 | image+6 | 32 bit | raw drive units
+Input Mode display | COB-ID 0x281 | OD 0x6061:0 | DLC 5 | frame+4 | image+10 | 8 bit | raw drive units
+Output Control word | COB-ID 0x201 | OD 0x6040:0 | DLC 7 | frame+0 | image+0 | 16 bit | raw drive units
+Output Target Position | COB-ID 0x201 | OD 0x607a:0 | DLC 7 | frame+2 | image+2 | 32 bit | raw drive units
+Output Mode of operation | COB-ID 0x201 | OD 0x6060:0 | DLC 7 | frame+6 | image+6 | 8 bit | raw drive units
+Slot 1 | node 2 | eRob90H100T-J2
+Input Status word | COB-ID 0x182 | OD 0x6041:0 | DLC 6 | frame+0 | image+11 | 16 bit | raw drive units
+Input Position actual value | COB-ID 0x182 | OD 0x6064:0 | DLC 6 | frame+2 | image+13 | 32 bit | raw drive units
+Input Velocity actual value | COB-ID 0x282 | OD 0x606c:0 | DLC 5 | frame+0 | image+17 | 32 bit | raw drive units
+Input Mode display | COB-ID 0x282 | OD 0x6061:0 | DLC 5 | frame+4 | image+21 | 8 bit | raw drive units
+Output Control word | COB-ID 0x202 | OD 0x6040:0 | DLC 7 | frame+0 | image+7 | 16 bit | raw drive units
+Output Target Position | COB-ID 0x202 | OD 0x607a:0 | DLC 7 | frame+2 | image+9 | 32 bit | raw drive units
+Output Mode of operation | COB-ID 0x202 | OD 0x6060:0 | DLC 7 | frame+6 | image+13 | 8 bit | raw drive units
+Slot 2 | node 3 | eRob90H100T-J3
+Input Status word | COB-ID 0x183 | OD 0x6041:0 | DLC 6 | frame+0 | image+22 | 16 bit | raw drive units
+Input Position actual value | COB-ID 0x183 | OD 0x6064:0 | DLC 6 | frame+2 | image+24 | 32 bit | raw drive units
+Input Velocity actual value | COB-ID 0x283 | OD 0x606c:0 | DLC 5 | frame+0 | image+28 | 32 bit | raw drive units
+Input Mode display | COB-ID 0x283 | OD 0x6061:0 | DLC 5 | frame+4 | image+32 | 8 bit | raw drive units
+Output Control word | COB-ID 0x203 | OD 0x6040:0 | DLC 7 | frame+0 | image+14 | 16 bit | raw drive units
+Output Target Position | COB-ID 0x203 | OD 0x607a:0 | DLC 7 | frame+2 | image+16 | 32 bit | raw drive units
+Output Mode of operation | COB-ID 0x203 | OD 0x6060:0 | DLC 7 | frame+6 | image+20 | 8 bit | raw drive units
+Input 33 B | Output 21 B | 10 frames/cycle | 1090 bit | 10.90% | management reserve 665 bit
+  duration (ms)             : 0
+  verbose                   : diagnostic
+  heartbeat (ms)            : 100
+  PREOP timeout (ms)        : 10000
+  OP timeout (ms)           : 10000
+  command timeout (ms)      : 1000
+  eRob90H100T-J1 | expected vendor/product 0x5a65726f/0x26483052 | PDO configure | heartbeat production/consumption/master 100/300/300 ms
+  eRob90H100T-J2 | expected vendor/product 0x5a65726f/0x26483052 | PDO configure | heartbeat production/consumption/master 100/300/300 ms
+  eRob90H100T-J3 | expected vendor/product 0x5a65726f/0x26483052 | PDO configure | heartbeat production/consumption/master 100/300/300 ms
+[SHM] ----------------------------------------
+  ABI                       : 2
+  header (B)                : 80
+  bus (B)                   : 220088
+  bus object                : /ecm_v2_2
+  input                     : /pd_input_v2_2
+  output                    : /pd_output_v2_2
+  App semaphore             : /sync_v2_2_8
+  runtime license           : N/A
+[CAN] can0 | physical (verified bitrate) | timestamp: kernel RX / host monotonic ns
+[NMT] ----------------------------------------
+  slot 0 node 1 eRob90H100T-J1 | online identity 0x5a65726f:0x26483052 revision 0x20111 serial 0x0 firmware 150403171
+  slot 1 node 2 eRob90H100T-J2 | online identity 0x5a65726f:0x26483052 revision 0x20111 serial 0x0 firmware 150403171
+  slot 2 node 3 eRob90H100T-J3 | online identity 0x5a65726f:0x26483052 revision 0x20111 serial 0x0 firmware 150403171
+[Ready] ----------------------------------------
+  startup target            : op
+[Shutdown] ----------------------------------------
+  SYNC count                : 238877
+  complete feedback windows : 238877
+  normal target batches     : 238865
+  missed cycles             : 1
+  last feedback RX (ns)     : 3248758134835
+  last OD update (ns)       : 3248758216642
+  last target submit (ns)   : 3248762453028
+  fault                     : invalid feedback window
+  fault host mono (ns)      : 3248766419408
+  fault CAN-ID              : 0x282
+  affected slot 1 node 2
+  max host SYNC jitter (ns) : 2858203
+  max feedback lag (ns)     : 1153377
+  min submit margin (ns)    : 981696
+  RX queue overflow events  : 0
+  node heartbeat faults     : 0
+  stop SYNC count           : 1
+  stop slot 0 | status 0x240 | raw velocity -31 | first stop status RX mono (ns) 3248776903447
+  stop slot 1 | status 0x240 | raw velocity -36 | first stop status RX mono (ns) 3248777050298
+  stop slot 2 | status 0x240 | raw velocity 0 | first stop status RX mono (ns) 3248777098815
+invalid feedback window CAN-ID 642

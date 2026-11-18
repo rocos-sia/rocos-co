@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Analyze closed SYNC windows in a candump -L trace of the eRob six-axis PDO layout."""
+"""Analyze closed SYNC windows in a candump -L trace of the default eRob PDO layout."""
 import argparse
 import csv
 import json
@@ -38,11 +38,11 @@ def read_frames(lines, interface):
         yield stamp, int(cob, 16), len(payload) // 2
 
 
-def analyze(frames, nodes, first, last, writer):
+def analyze(frames, nodes, first, last, writer, period_ns=8_000_000):
     expected = {base + node: size for node in nodes for base, size in ((0x180, 6), (0x280, 5), (0x200, 7))}
     targets = {0x200 + node for node in nodes}
     feedback = expected.keys() - targets
-    summary = dict(period_target_ns=8_000_000, closed_windows=0, incomplete_windows=0,
+    summary = dict(period_target_ns=period_ns, closed_windows=0, incomplete_windows=0,
                    phase_errors=0, max_abs_sync_jitter_ns=0, max_feedback_complete_after_ns=None,
                    min_last_target_to_sync_ns=None)
     start = None
@@ -69,7 +69,7 @@ def analyze(frames, nodes, first, last, writer):
                 summary["incomplete_windows"] += int(bool(invalid))
                 summary["phase_errors"] += int(early is True)
                 anomalies.update(invalid)
-                summary["max_abs_sync_jitter_ns"] = max(summary["max_abs_sync_jitter_ns"], abs(period - 8_000_000))
+                summary["max_abs_sync_jitter_ns"] = max(summary["max_abs_sync_jitter_ns"], abs(period - period_ns))
                 for key, value, choose in (("max_feedback_complete_after_ns", lag, max),
                                            ("min_last_target_to_sync_ns", margin, min)):
                     if value is not None:
@@ -99,22 +99,26 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("capture", type=Path)
     parser.add_argument("--interface", required=True)
-    parser.add_argument("--nodes", default="1,2,3,4,5,6", help="six decimal Node-IDs using default eRob COB-IDs")
+    parser.add_argument("--nodes", default="1,2,3,4,5,6", help="decimal Node-IDs using default eRob COB-IDs")
+    parser.add_argument("--period-us", type=int, default=8000, help="configured SYNC period in microseconds")
     parser.add_argument("--first-sync", type=int, default=1, help="first measured window, one-based")
     parser.add_argument("--last-sync", type=int, help="final measured window, requires a following SYNC")
     parser.add_argument("--csv", type=Path, help="new file to receive one row per closed window")
     args = parser.parse_args()
     try:
         nodes = [int(item) for item in args.nodes.split(",")]
-        if len(nodes) != 6 or len(set(nodes)) != 6 or not all(1 <= n <= 127 for n in nodes):
-            raise ValueError("expected six different Node-IDs in 1..127")
+        if not nodes or len(set(nodes)) != len(nodes) or not all(1 <= n <= 127 for n in nodes):
+            raise ValueError("expected different Node-IDs in 1..127")
+        if args.period_us <= 0:
+            raise ValueError("expected a positive SYNC period")
         if args.first_sync < 1 or (args.last_sync is not None and args.last_sync < args.first_sync):
             raise ValueError("invalid SYNC window range")
         with args.capture.open() as stream, (args.csv.open("x", newline="") if args.csv else nullcontext()) as out:
             writer = csv.writer(out) if out else None
             if writer:
                 writer.writerow(FIELDS)
-            summary = analyze(read_frames(stream, args.interface), nodes, args.first_sync, args.last_sync, writer)
+            summary = analyze(read_frames(stream, args.interface), nodes, args.first_sync, args.last_sync, writer,
+                              args.period_us * 1000)
     except (OSError, ValueError) as error:
         parser.exit(1, f"{error}\n")
     json.dump(summary, sys.stdout, indent=2)

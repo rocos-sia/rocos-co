@@ -1,0 +1,25 @@
+Test project /home/think/Documents/GitHub/rocos-co/build/debug
+    Start 1: config_help
+1/8 Test #1: config_help ......................   Passed    0.00 sec
+    Start 2: config_six_axes
+2/8 Test #2: config_six_axes ..................   Passed    0.00 sec
+    Start 3: config_image_and_od
+3/8 Test #3: config_image_and_od ..............   Passed    0.00 sec
+    Start 4: config_cli_boundaries
+4/8 Test #4: config_cli_boundaries ............   Passed    0.14 sec
+    Start 5: stack_pdo_transport
+5/8 Test #5: stack_pdo_transport ..............   Passed    0.00 sec
+    Start 6: deterministic_cycle_windows
+6/8 Test #6: deterministic_cycle_windows ......   Passed    0.00 sec
+    Start 7: shm_owner_lifecycle
+7/8 Test #7: shm_owner_lifecycle ..............   Passed    0.01 sec
+    Start 8: bench_trace_analysis
+8/8 Test #8: bench_trace_analysis .............   Passed    0.03 sec
+
+100% tests passed, 0 tests failed out of 8
+
+Label Time Summary:
+ipc     =   0.01 sec*proc (1 test)
+unit    =   0.18 sec*proc (7 tests)
+
+Total Test time (real) =   0.20 sec

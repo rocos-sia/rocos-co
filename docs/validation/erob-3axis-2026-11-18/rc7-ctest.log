@@ -1,0 +1,218 @@
+Start testing: Nov 18 18:01 CST
+----------------------------------------------------------
+1/8 Testing: config_help
+1/8 Test: config_help
+Command: "/home/think/Documents/GitHub/rocos-co/build/debug/bin/rocos_co_master" "--help"
+Directory: /home/think/Documents/GitHub/rocos-co/build/debug/tests
+"config_help" start time: Nov 18 18:01 CST
+Output:
+----------------------------------------------------------
+ROCOS-CO 0.0.0-rc.7
+rocos_co_master --config FILE [--check-config] [--master-id N] [--period-us N] [--cpu N]
+rocos_co_master --help
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"config_help" end time: Nov 18 18:01 CST
+"config_help" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/8 Testing: config_six_axes
+2/8 Test: config_six_axes
+Command: "/home/think/Documents/GitHub/rocos-co/build/debug/bin/rocos_co_master" "--check-config" "--config" "/home/think/Documents/GitHub/rocos-co/config/erob_6axis/co.yaml"
+Directory: /home/think/Documents/GitHub/rocos-co/build/debug/tests
+"config_six_axes" start time: Nov 18 18:01 CST
+Output:
+----------------------------------------------------------
+[Startup] ----------------------------------------
+  backend                   : co (3) / CANopenNode 9b8beed8367241e96ac03f916cd5a500bcb2cf23 / SocketCAN
+  product                   : 0.0.0-rc.7
+[Config] ----------------------------------------
+ROCOS-CO 0.0.0-rc.7
+Configuration /home/think/Documents/GitHub/rocos-co/config/erob_6axis/co.yaml
+SHM ID 2 | cycle 8000 us | CPU inherited
+SocketCAN can0 | 1000000 bit/s | master node 127 | target op
+Slot 0 | node 1 | eRob-J1
+Input Status word | COB-ID 0x181 | OD 0x6041:0 | DLC 6 | frame+0 | image+0 | 16 bit | raw drive units
+Input Position actual value | COB-ID 0x181 | OD 0x6064:0 | DLC 6 | frame+2 | image+2 | 32 bit | raw drive units
+Input Velocity actual value | COB-ID 0x281 | OD 0x606c:0 | DLC 5 | frame+0 | image+6 | 32 bit | raw drive units
+Input Mode display | COB-ID 0x281 | OD 0x6061:0 | DLC 5 | frame+4 | image+10 | 8 bit | raw drive units
+Output Control word | COB-ID 0x201 | OD 0x6040:0 | DLC 7 | frame+0 | image+0 | 16 bit | raw drive units
+Output Target Position | COB-ID 0x201 | OD 0x607a:0 | DLC 7 | frame+2 | image+2 | 32 bit | raw drive units
+Output Mode of operation | COB-ID 0x201 | OD 0x6060:0 | DLC 7 | frame+6 | image+6 | 8 bit | raw drive units
+Slot 1 | node 2 | eRob-J2
+Input Status word | COB-ID 0x182 | OD 0x6041:0 | DLC 6 | frame+0 | image+11 | 16 bit | raw drive units
+Input Position actual value | COB-ID 0x182 | OD 0x6064:0 | DLC 6 | frame+2 | image+13 | 32 bit | raw drive units
+Input Velocity actual value | COB-ID 0x282 | OD 0x606c:0 | DLC 5 | frame+0 | image+17 | 32 bit | raw drive units
+Input Mode display | COB-ID 0x282 | OD 0x6061:0 | DLC 5 | frame+4 | image+21 | 8 bit | raw drive units
+Output Control word | COB-ID 0x202 | OD 0x6040:0 | DLC 7 | frame+0 | image+7 | 16 bit | raw drive units
+Output Target Position | COB-ID 0x202 | OD 0x607a:0 | DLC 7 | frame+2 | image+9 | 32 bit | raw drive units
+Output Mode of operation | COB-ID 0x202 | OD 0x6060:0 | DLC 7 | frame+6 | image+13 | 8 bit | raw drive units
+Slot 2 | node 3 | eRob-J3
+Input Status word | COB-ID 0x183 | OD 0x6041:0 | DLC 6 | frame+0 | image+22 | 16 bit | raw drive units
+Input Position actual value | COB-ID 0x183 | OD 0x6064:0 | DLC 6 | frame+2 | image+24 | 32 bit | raw drive units
+Input Velocity actual value | COB-ID 0x283 | OD 0x606c:0 | DLC 5 | frame+0 | image+28 | 32 bit | raw drive units
+Input Mode display | COB-ID 0x283 | OD 0x6061:0 | DLC 5 | frame+4 | image+32 | 8 bit | raw drive units
+Output Control word | COB-ID 0x203 | OD 0x6040:0 | DLC 7 | frame+0 | image+14 | 16 bit | raw drive units
+Output Target Position | COB-ID 0x203 | OD 0x607a:0 | DLC 7 | frame+2 | image+16 | 32 bit | raw drive units
+Output Mode of operation | COB-ID 0x203 | OD 0x6060:0 | DLC 7 | frame+6 | image+20 | 8 bit | raw drive units
+Slot 3 | node 4 | eRob-J4
+Input Status word | COB-ID 0x184 | OD 0x6041:0 | DLC 6 | frame+0 | image+33 | 16 bit | raw drive units
+Input Position actual value | COB-ID 0x184 | OD 0x6064:0 | DLC 6 | frame+2 | image+35 | 32 bit | raw drive units
+Input Velocity actual value | COB-ID 0x284 | OD 0x606c:0 | DLC 5 | frame+0 | image+39 | 32 bit | raw drive units
+Input Mode display | COB-ID 0x284 | OD 0x6061:0 | DLC 5 | frame+4 | image+43 | 8 bit | raw drive units
+Output Control word | COB-ID 0x204 | OD 0x6040:0 | DLC 7 | frame+0 | image+21 | 16 bit | raw drive units
+Output Target Position | COB-ID 0x204 | OD 0x607a:0 | DLC 7 | frame+2 | image+23 | 32 bit | raw drive units
+Output Mode of operation | COB-ID 0x204 | OD 0x6060:0 | DLC 7 | frame+6 | image+27 | 8 bit | raw drive units
+Slot 4 | node 5 | eRob-J5
+Input Status word | COB-ID 0x185 | OD 0x6041:0 | DLC 6 | frame+0 | image+44 | 16 bit | raw drive units
+Input Position actual value | COB-ID 0x185 | OD 0x6064:0 | DLC 6 | frame+2 | image+46 | 32 bit | raw drive units
+Input Velocity actual value | COB-ID 0x285 | OD 0x606c:0 | DLC 5 | frame+0 | image+50 | 32 bit | raw drive units
+Input Mode display | COB-ID 0x285 | OD 0x6061:0 | DLC 5 | frame+4 | image+54 | 8 bit | raw drive units
+Output Control word | COB-ID 0x205 | OD 0x6040:0 | DLC 7 | frame+0 | image+28 | 16 bit | raw drive units
+Output Target Position | COB-ID 0x205 | OD 0x607a:0 | DLC 7 | frame+2 | image+30 | 32 bit | raw drive units
+Output Mode of operation | COB-ID 0x205 | OD 0x6060:0 | DLC 7 | frame+6 | image+34 | 8 bit | raw drive units
+Slot 5 | node 6 | eRob-J6
+Input Status word | COB-ID 0x186 | OD 0x6041:0 | DLC 6 | frame+0 | image+55 | 16 bit | raw drive units
+Input Position actual value | COB-ID 0x186 | OD 0x6064:0 | DLC 6 | frame+2 | image+57 | 32 bit | raw drive units
+Input Velocity actual value | COB-ID 0x286 | OD 0x606c:0 | DLC 5 | frame+0 | image+61 | 32 bit | raw drive units
+Input Mode display | COB-ID 0x286 | OD 0x6061:0 | DLC 5 | frame+4 | image+65 | 8 bit | raw drive units
+Output Control word | COB-ID 0x206 | OD 0x6040:0 | DLC 7 | frame+0 | image+35 | 16 bit | raw drive units
+Output Target Position | COB-ID 0x206 | OD 0x607a:0 | DLC 7 | frame+2 | image+37 | 32 bit | raw drive units
+Output Mode of operation | COB-ID 0x206 | OD 0x6060:0 | DLC 7 | frame+6 | image+41 | 8 bit | raw drive units
+Input 66 B | Output 42 B | 19 frames/cycle | 2125 bit | 26.56% | management reserve 860 bit
+  duration (ms)             : 0
+  verbose                   : diagnostic
+  heartbeat (ms)            : 100
+  PREOP timeout (ms)        : 10000
+  OP timeout (ms)           : 10000
+  command timeout (ms)      : 1000
+  eRob-J1 | expected vendor/product 0x5a65726f/0x26483052 | PDO configure | heartbeat production/consumption/master 100/300/300 ms
+  eRob-J2 | expected vendor/product 0x5a65726f/0x26483052 | PDO configure | heartbeat production/consumption/master 100/300/300 ms
+  eRob-J3 | expected vendor/product 0x5a65726f/0x26483052 | PDO configure | heartbeat production/consumption/master 100/300/300 ms
+  eRob-J4 | expected vendor/product 0x5a65726f/0x26483052 | PDO configure | heartbeat production/consumption/master 100/300/300 ms
+  eRob-J5 | expected vendor/product 0x5a65726f/0x26483052 | PDO configure | heartbeat production/consumption/master 100/300/300 ms
+  eRob-J6 | expected vendor/product 0x5a65726f/0x26483052 | PDO configure | heartbeat production/consumption/master 100/300/300 ms
+[SHM] ----------------------------------------
+  ABI                       : 2
+  header (B)                : 80
+  bus (B)                   : 220088
+  bus object                : /ecm_v2_2
+  input                     : /pd_input_v2_2
+  output                    : /pd_output_v2_2
+  App semaphore             : /sync_v2_2_8
+  runtime license           : N/A
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"config_six_axes" end time: Nov 18 18:01 CST
+"config_six_axes" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/8 Testing: config_image_and_od
+3/8 Test: config_image_and_od
+Command: "/home/think/Documents/GitHub/rocos-co/build/debug/bin/config_image_test" "/home/think/Documents/GitHub/rocos-co/config/erob_6axis/co.yaml"
+Directory: /home/think/Documents/GitHub/rocos-co/build/debug/tests
+"config_image_and_od" start time: Nov 18 18:01 CST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"config_image_and_od" end time: Nov 18 18:01 CST
+"config_image_and_od" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/8 Testing: config_cli_boundaries
+4/8 Test: config_cli_boundaries
+Command: "/usr/bin/python3.10" "/home/think/Documents/GitHub/rocos-co/tests/unit/config_cli.py" "/home/think/Documents/GitHub/rocos-co/build/debug/bin/rocos_co_master" "/home/think/Documents/GitHub/rocos-co/config/erob_6axis/co.yaml"
+Directory: /home/think/Documents/GitHub/rocos-co/build/debug/tests
+"config_cli_boundaries" start time: Nov 18 18:01 CST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.21 sec
+----------------------------------------------------------
+Test Passed.
+"config_cli_boundaries" end time: Nov 18 18:01 CST
+"config_cli_boundaries" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/8 Testing: stack_pdo_transport
+5/8 Test: stack_pdo_transport
+Command: "/home/think/Documents/GitHub/rocos-co/build/debug/bin/stack_test" "/home/think/Documents/GitHub/rocos-co/config/erob_6axis/co.yaml"
+Directory: /home/think/Documents/GitHub/rocos-co/build/debug/tests
+"stack_pdo_transport" start time: Nov 18 18:01 CST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"stack_pdo_transport" end time: Nov 18 18:01 CST
+"stack_pdo_transport" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/8 Testing: deterministic_cycle_windows
+6/8 Test: deterministic_cycle_windows
+Command: "/home/think/Documents/GitHub/rocos-co/build/debug/bin/cycle_test" "/home/think/Documents/GitHub/rocos-co/config/erob_6axis/co.yaml"
+Directory: /home/think/Documents/GitHub/rocos-co/build/debug/tests
+"deterministic_cycle_windows" start time: Nov 18 18:01 CST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"deterministic_cycle_windows" end time: Nov 18 18:01 CST
+"deterministic_cycle_windows" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/8 Testing: shm_owner_lifecycle
+7/8 Test: shm_owner_lifecycle
+Command: "/home/think/Documents/GitHub/rocos-co/build/debug/bin/shm_owner_test" "/home/think/Documents/GitHub/rocos-co/config/erob_6axis/co.yaml" "/home/think/Documents/GitHub/rocos-co/build/debug/bin/shm_client"
+Directory: /home/think/Documents/GitHub/rocos-co/build/debug/tests
+"shm_owner_lifecycle" start time: Nov 18 18:01 CST
+Output:
+----------------------------------------------------------
+[NMT] ----------------------------------------
+  slot 0 node 1 eRob-J1 | online identity 0x5a65726f:0x26483052 revision 0x20111 firmware fixture
+  slot 1 node 2 eRob-J2 | online identity 0x5a65726f:0x26483052 revision 0x20111 firmware fixture
+  slot 2 node 3 eRob-J3 | online identity 0x5a65726f:0x26483052 revision 0x20111 firmware fixture
+  slot 3 node 4 eRob-J4 | online identity 0x5a65726f:0x26483052 revision 0x20111 firmware fixture
+  slot 4 node 5 eRob-J5 | online identity 0x5a65726f:0x26483052 revision 0x20111 firmware fixture
+  slot 5 node 6 eRob-J6 | online identity 0x5a65726f:0x26483052 revision 0x20111 firmware fixture
+[Ready] ----------------------------------------
+  startup target            : op
+INSTANCE 13650633729500470150
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"shm_owner_lifecycle" end time: Nov 18 18:01 CST
+"shm_owner_lifecycle" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/8 Testing: bench_trace_analysis
+8/8 Test: bench_trace_analysis
+Command: "/usr/bin/python3.10" "/home/think/Documents/GitHub/rocos-co/tests/unit/bench_trace_test.py" "/home/think/Documents/GitHub/rocos-co/scripts/analyze-bench-trace.py"
+Directory: /home/think/Documents/GitHub/rocos-co/build/debug/tests
+"bench_trace_analysis" start time: Nov 18 18:01 CST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"bench_trace_analysis" end time: Nov 18 18:01 CST
+"bench_trace_analysis" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 18 18:01 CST
+
+ipc =   0.01 sec*proc
+
+unit =   0.26 sec*proc
